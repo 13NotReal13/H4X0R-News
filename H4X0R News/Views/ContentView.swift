@@ -13,11 +13,13 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List(networkManager.posts) { post in
-                HStack {
-                    Text("\(post.points)")
-                        .frame(width: 32)
-                        .multilineTextAlignment(.leading)
-                    Text(post.title)
+                NavigationLink(destination: DetailView(url: post.url)) {
+                    HStack {
+                        Text("\(post.points)")
+                            .frame(width: 32)
+                            .multilineTextAlignment(.leading)
+                        Text(post.title)
+                    }
                 }
             }
             .navigationTitle("H4X0R News")

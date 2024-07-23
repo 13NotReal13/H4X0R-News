@@ -7,7 +7,9 @@
 
 import Foundation
 
-final class NetworkManager {
+final class NetworkManager: ObservableObject {
+    
+    @Published var posts = [Post]()
     
     func fetchData() {
         if let url = URL(string: "http://hn.algolia.com/api/v1/search?tags=front_page") {
@@ -22,6 +24,9 @@ final class NetworkManager {
                     let decoder = JSONDecoder()
                     do {
                         let results = try decoder.decode(Results.self, from: data)
+                        DispatchQueue.main.async {
+                            self.posts = results.hits
+                        }
                     } catch {
                         print(error)
                     }
